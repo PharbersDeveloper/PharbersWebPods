@@ -1,0 +1,85 @@
+models:
+  - PhApplyuser
+
+storages:
+- name: PhApplyuserStorage
+  method: NewApplyuserStorage
+  daemons:
+  - BmMongodbDaemon
+
+resources:
+- name: PhApplyuserResource
+  method: NewApplyuserResource
+  storages:
+  - PhApplyuserStorage
+
+services:
+- name: ph-applyuser
+  model: PhApplyuser
+  resource: PhApplyuserResource
+
+functions:
+- name: PhSendMailHandler
+  create: NewSmsHandler
+  daemons:
+    - BmMongodbDaemon
+    - BmRedisDaemon
+  method: SendMail
+  http: POST
+  args:
+    - v0
+    - mail:60106
+    - SendMail
+- name: PhSendSmsHandler
+  create: NewSmsHandler
+  daemons:
+    - BmMongodbDaemon
+    - BmRedisDaemon
+  method: SendSms
+  http: POST
+  args:
+    - v0
+    - sms:60105
+    - SendSms
+- name: PhVerifySmsHandler
+  create: NewSmsHandler
+  daemons:
+    - BmMongodbDaemon
+    - BmRedisDaemon
+  method: VerifyCode
+  http: POST
+  args:
+    - v0
+    - sms:60105
+    - VerifySmsCode
+
+#middlewares:
+#- name: NtmCheckTokenMiddleware
+#  create: NewCheckTokenMiddleware
+#  daemons:
+#  - BmRedisDaemon
+#  args:
+##  - oauth.pharbers.com
+#  - 192.168.100.174:9096
+panic:
+  name: PhCommonPanicHandle
+  create: NewCommonPanicHandle
+
+daemons:
+- name: BmMongodbDaemon
+  method: NewMongoDBDaemon
+  args:
+    host: 123.56.179.133
+    port: 5555
+#    host: 127.0.0.1
+#    port: 27017
+    database: pharbers-auth-server
+- name: BmRedisDaemon
+  method: NewRedisDBDaemon
+  args:
+    host: 123.56.179.133
+    port: 6378
+#    host: 127.0.0.1
+#    port: 6379
+    password:
+    database: 0
