@@ -26,6 +26,7 @@ var PH_RESOURCE_FACTORY = map[string]interface{}{
 var PH_FUNCTION_FACTORY = map[string]interface{}{
 	"PhCommonPanicHandle":  PhHandler.CommonPanicHandle{},
 	"PhSendMailHandler":	PhHandler.PhSendMailHandler{},
+	"PhSendBlueBookHandler":PhHandler.PhSendMailHandler{},
 	"PhSendSmsHandler":		PhHandler.PhSendSmsHandler{},
 	"PhVerifySmsHandler":	PhHandler.PhSendSmsHandler{},
 

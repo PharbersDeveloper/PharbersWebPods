@@ -94,7 +94,7 @@ func (h PhSendMailHandler) SendMail(w http.ResponseWriter, r *http.Request, _ ht
 	requestAccountMail := []byte(`{
 		"email": "`+ mail.Email +`",
 		"subject": "体验账号",
-		"content": "网址：<a href=http://wwww.pharbers.com>http://wwww.pharbers.com</a><br>账户：demo@pharbers.com<br>密码：123456",
+		"content": "网址：<a href=http://www.pharbers.com>http://www.pharbers.com</a><br>账户：demo@pharbers.com<br>密码：123456",
 		"content-type": "text/html; charset=UTF-8"}`)
 
 	mailResponse, _ := h.sendMail(r, requestAccountMail)
@@ -144,6 +144,59 @@ func (h PhSendMailHandler) SendMail(w http.ResponseWriter, r *http.Request, _ ht
 	enc.Encode(response)
 	return 0
 }
+
+func (h PhSendMailHandler) SendBlueBookMail(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
+	w.Header().Add("Content-Type", "application/json")
+
+	body, err := ioutil.ReadAll(r.Body)
+
+	response := map[string]interface{}{}
+
+	if err != nil {
+		log.Printf("解析Body出错：%v", err)
+		http.Error(w, "can't read body", http.StatusBadRequest)
+		return 1
+	}
+
+	mail := eMail{}
+	err = json.Unmarshal(body, &mail)
+
+	if err != nil {
+		log.Printf("解析Json出错：%v", err)
+		http.Error(w, "can't convert Sms struct", http.StatusBadRequest)
+		return 1
+	}
+
+	url := "https://pharbers-blue-book.oss-cn-beijing.aliyuncs.com/%E5%B9%BF%E9%98%94%E5%B8%82%E5%9C%BA%E7%94%A8%E8%8D%AF%E5%88%86%E6%9E%90%E5%8F%8A%E5%B1%95%E6%9C%9B.pdf?Expires=1558502295&OSSAccessKeyId=TMP.AgFMIT5X7sfiSa-WpW9nAqRIVxowxnnhsPr2_DOAnrs-lsGtZa78LMTgiyxoAAAwLAIUdBuSox4f1SDAekodE5j6sP_8rXwCFDSqrYfYvCnk79l5cwg5YxkOeFdr&Signature=sNaFiPNkkYQUVSx1am%2FKu3spcb8%3D"
+
+	requestAccountMail := []byte(`{
+		"email": "`+ mail.Email +`",
+		"subject": "蓝皮书",
+		"content": "蓝皮书地址：<a href=`+ url +`>点击查看下载</a>",
+		"content-type": "text/html; charset=UTF-8"}`)
+
+	mailResponse, _ := h.sendMail(r, requestAccountMail)
+
+	mailBody, err := ioutil.ReadAll(mailResponse.Body)
+
+	mailStatus := responseMail{}
+
+	json.Unmarshal(mailBody, &mailStatus)
+
+	if mailStatus.Status == "error" {
+		enc := json.NewEncoder(w)
+		enc.Encode(mailStatus)
+		return 1
+	}
+
+	response["status"] = "success"
+	response["msg"] = "邮件发送成功！"
+
+	enc := json.NewEncoder(w)
+	enc.Encode(response)
+	return 0
+}
+
 
 func (h PhSendMailHandler) GetHttpMethod() string {
 	return h.HttpMethod

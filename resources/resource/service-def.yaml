@@ -22,36 +22,47 @@ functions:
 - name: PhSendMailHandler
   create: NewSmsHandler
   daemons:
-    - BmMongodbDaemon
-    - BmRedisDaemon
+  - BmMongodbDaemon
+  - BmRedisDaemon
   method: SendMail
   http: POST
   args:
-    - v0
-    - mail:60106
-    - SendMail
+  - v0
+  - mail:60106
+  - SendMail
+- name: PhSendBlueBookHandler
+  create: NewSmsHandler
+  daemons:
+  - BmMongodbDaemon
+  - BmRedisDaemon
+  method: SendBlueBookMail
+  http: POST
+  args:
+  - v0
+  - mail:60106
+  - SendMail
 - name: PhSendSmsHandler
   create: NewSmsHandler
   daemons:
-    - BmMongodbDaemon
-    - BmRedisDaemon
+  - BmMongodbDaemon
+  - BmRedisDaemon
   method: SendSms
   http: POST
   args:
-    - v0
-    - sms:60105
-    - SendSms
+  - v0
+  - sms:60105
+  - SendSms
 - name: PhVerifySmsHandler
   create: NewSmsHandler
   daemons:
-    - BmMongodbDaemon
-    - BmRedisDaemon
+  - BmMongodbDaemon
+  - BmRedisDaemon
   method: VerifyCode
   http: POST
   args:
-    - v0
-    - sms:60105
-    - VerifySmsCode
+  - v0
+  - sms:60105
+  - VerifySmsCode
 
 #middlewares:
 #- name: NtmCheckTokenMiddleware

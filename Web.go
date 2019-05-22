@@ -20,8 +20,8 @@ func main() {
 
 	fac := PhFactory.PhTable{}
 	var pod = BmPodsDefine.Pod{Name: "new PHARBERS_WEB", Factory: fac}
-	ntmHome := os.Getenv(prodEnv)
-	pod.RegisterSerFromYAML(ntmHome + "/resource/service-def.yaml")
+	envHome := os.Getenv(prodEnv)
+	pod.RegisterSerFromYAML(envHome + "/resource/service-def.yaml")
 
 	var bmRouter BmConfig.BmRouterConfig
 	bmRouter.GenerateConfig(prodEnv)
