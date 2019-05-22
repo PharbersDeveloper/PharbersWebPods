@@ -29,6 +29,7 @@ functions:
   args:
   - v0
   - mail:60106
+#  - 127.0.0.1:60106
   - SendMail
 - name: PhSendBlueBookHandler
   create: NewSmsHandler
@@ -40,6 +41,7 @@ functions:
   args:
   - v0
   - mail:60106
+#  - 127.0.0.1:60106
   - SendMail
 - name: PhSendSmsHandler
   create: NewSmsHandler
@@ -51,6 +53,7 @@ functions:
   args:
   - v0
   - sms:60105
+#  - 127.0.0.1:60105
   - SendSms
 - name: PhVerifySmsHandler
   create: NewSmsHandler
@@ -62,6 +65,7 @@ functions:
   args:
   - v0
   - sms:60105
+#  - 127.0.0.1:60105
   - VerifySmsCode
 
 #middlewares:
