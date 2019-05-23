@@ -112,19 +112,19 @@ func (h PhSendSmsHandler) SendSms(w http.ResponseWriter, r *http.Request, _ http
 		req.Header.Add(k, v[0])
 	}
 
-	smsResponse, err := client.Do(req)
+	client.Do(req)
 
-	smsBody, err := ioutil.ReadAll(smsResponse.Body)
-
-	smsStatus := responseSms{}
-
-	json.Unmarshal(smsBody, &smsStatus)
-
-	if smsStatus.Status == "error" {
-		enc := json.NewEncoder(w)
-		enc.Encode(smsStatus)
-		return 1
-	}
+	//smsBody, err := ioutil.ReadAll(smsResponse.Body)
+	//
+	//smsStatus := responseSms{}
+	//
+	//json.Unmarshal(smsBody, &smsStatus)
+	//
+	//if smsStatus.Status == "error" {
+	//	enc := json.NewEncoder(w)
+	//	enc.Encode(smsStatus)
+	//	return 1
+	//}
 
 	response["status"] = "success"
 	response["msg"] = "短信发送成功！"

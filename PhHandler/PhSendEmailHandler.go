@@ -98,19 +98,19 @@ func (h PhSendMailHandler) SendMail(w http.ResponseWriter, r *http.Request, _ ht
 		"content": "网址：<a href=http://www.pharbers.com>http://www.pharbers.com</a><br>账户：demo@pharbers.com<br>密码：123456",
 		"content-type": "text/html; charset=UTF-8"}`)
 
-	mailResponse, _ := h.sendMail(r, requestAccountMail)
+	h.sendMail(r, requestAccountMail)
 
-	mailBody, err := ioutil.ReadAll(mailResponse.Body)
+	//mailBody, err := ioutil.ReadAll(mailResponse.Body)
 
-	mailStatus := responseMail{}
+	//mailStatus := responseMail{}
 
-	json.Unmarshal(mailBody, &mailStatus)
+	//json.Unmarshal(mailBody, &mailStatus)
 
-	if mailStatus.Status == "error" {
-		enc := json.NewEncoder(w)
-		enc.Encode(mailStatus)
-		return 1
-	}
+	//if mailStatus.Status == "error" {
+	//	enc := json.NewEncoder(w)
+	//	enc.Encode(mailStatus)
+	//	return 1
+	//}
 
 	applyuser := PhModel.Applyuser{}
 	var out PhModel.Applyuser
@@ -124,19 +124,19 @@ func (h PhSendMailHandler) SendMail(w http.ResponseWriter, r *http.Request, _ ht
 		"content": "称呼：`+ out.Name +`<br>所在公司与团队：`+ out.Company +`<br>电子邮件：`+ out.Email +`<br>联系电话：`+ out.Phone +`",
 		"content-type": "text/html; charset=UTF-8"}`)
 
-	mailResponse, _ = h.sendMail(r, requestUserMail)
-
-	mailBody, err = ioutil.ReadAll(mailResponse.Body)
-
-	mailStatus = responseMail{}
-
-	json.Unmarshal(mailBody, &mailStatus)
-
-	if mailStatus.Status == "error" {
-		enc := json.NewEncoder(w)
-		enc.Encode(mailStatus)
-		return 1
-	}
+	h.sendMail(r, requestUserMail)
+	//
+	//mailBody, err = ioutil.ReadAll(mailResponse.Body)
+	//
+	//mailStatus = responseMail{}
+	//
+	//json.Unmarshal(mailBody, &mailStatus)
+	//
+	//if mailStatus.Status == "error" {
+	//	enc := json.NewEncoder(w)
+	//	enc.Encode(mailStatus)
+	//	return 1
+	//}
 
 	response["status"] = "success"
 	response["msg"] = "邮件发送成功！"
@@ -174,19 +174,19 @@ func (h PhSendMailHandler) SendBlueBookMail(w http.ResponseWriter, r *http.Reque
 		"content": "蓝皮书地址：<a href=`+ mail.Content +`>点击查看下载</a><br>12小时失效",
 		"content-type": "text/html; charset=UTF-8"}`)
 
-	mailResponse, _ := h.sendMail(r, requestAccountMail)
+	h.sendMail(r, requestAccountMail)
 
-	mailBody, err := ioutil.ReadAll(mailResponse.Body)
+	//mailBody, err := ioutil.ReadAll(mailResponse.Body)
 
-	mailStatus := responseMail{}
+	//mailStatus := responseMail{}
 
-	json.Unmarshal(mailBody, &mailStatus)
+	//json.Unmarshal(mailBody, &mailStatus)
 
-	if mailStatus.Status == "error" {
-		enc := json.NewEncoder(w)
-		enc.Encode(mailStatus)
-		return 1
-	}
+	//if mailStatus.Status == "error" {
+	//	enc := json.NewEncoder(w)
+	//	enc.Encode(mailStatus)
+	//	return 1
+	//}
 
 	response["status"] = "success"
 	response["msg"] = "邮件发送成功！"
