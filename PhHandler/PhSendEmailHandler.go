@@ -95,7 +95,7 @@ func (h PhSendMailHandler) SendMail(w http.ResponseWriter, r *http.Request, _ ht
 	requestAccountMail := []byte(`{
 		"email": "`+ mail.Email +`",
 		"subject": "体验账号",
-		"content": "网址：<a href=http://www.pharbers.com>http://www.pharbers.com</a><br>账户：demo@pharbers.com<br>密码：123456",
+		"content": "网址：<a href=http://www.pharbers.com>http://www.pharbers.com</a><br>账户：demo@pharbers.com<br>密码：pharbers",
 		"content-type": "text/html; charset=UTF-8"}`)
 
 	h.sendMail(r, requestAccountMail)
