@@ -205,7 +205,7 @@ func (h PhSendMailHandler) GetHandlerMethod() string {
 	return h.Method
 }
 
-func (h PhSendMailHandler) sendMail(r *http.Request, content []byte) (*http.Response, error){
+func (h PhSendMailHandler) sendMail(r *http.Request, content []byte) {
 	// 拼接转发的URL
 	scheme := "http://"
 	if r.TLS != nil {
@@ -225,8 +225,6 @@ func (h PhSendMailHandler) sendMail(r *http.Request, content []byte) (*http.Resp
 		req.Header.Add(k, v[0])
 	}
 
-	mailResponse, err := client.Do(req)
-
-	return mailResponse, err
+	client.Do(req)
 }
 
