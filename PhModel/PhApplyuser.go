@@ -11,6 +11,9 @@ type Applyuser struct {
 	Company    string        `json:"company" bson:"company"`
 	Email      string        `json:"email" bson:"email"`
 	Phone      string        `json:"phone" bson:"phone"`
+	Department string        `json:"department" bson:"department"` // 新增字段 部门
+	Position   string        `json:"position" bson:"position"`     // 新增字段 职务
+	Intention  string        `json:"intention" bson:"intention"`   // 新增字段 感兴趣内容
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
